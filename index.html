@@ -22,9 +22,11 @@ h1{font:600 30px/1.2 Georgia,serif;margin:6px 0 0}.sub{color:var(--mute);margin:
 @media(prefers-reduced-motion:reduce){.msg{animation:none}}
 table{border-collapse:collapse;width:100%;font-size:15px;margin:10px 0}th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}th{background:var(--code)}
 pre{white-space:pre-wrap;background:var(--code);border-radius:8px;padding:12px 14px;margin:8px 0;font:14px/1.55 Consolas,monospace}
+.guide{display:flex;align-items:center;gap:14px;background:var(--acc);color:#fff;text-decoration:none;border-radius:12px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.18)}.guide:hover{background:var(--accd)}.guide .ic{font-size:30px;line-height:1}.guide b{display:block;font-size:19px}.guide span.d{font-size:14px;opacity:.92}.guide .ar{margin-left:auto;font-size:26px}
 .foot{color:var(--mute);font-size:14px;text-align:center}:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 </style></head><body><main>
 <div class="sw" role="group" aria-label="Language" id="sw"></div>
+<a class="guide" id="gd" href="../guida/index.html"><span class="ic" aria-hidden="true">📖</span><span><b id="gt"></b><span class="d" id="gs"></span></span><span class="ar" aria-hidden="true">→</span></a>
 <div><h1 id="t"></h1><p class="sub" id="s"></p></div>
 <div class="banner" id="banner"></div>
 <div class="card"><h2 id="hq"></h2><p class="q" id="q" style="margin:0"></p></div>
@@ -128,13 +130,14 @@ pt: {
 const L=["it","en","fr","de","es","pt"],$=id=>document.getElementById(id),COL=["var(--c1)","var(--c2)","var(--c3)"];
 let cur="en",tm=[],run=0;
 const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const GL={it:["Vai alla guida","Come si installa e si usa Plurivox IA, passo per passo"],en:["Go to the guide","How to install and use Plurivox IA, step by step"],fr:["Aller au guide","Installer et utiliser Plurivox IA, pas à pas"],de:["Zur Anleitung","Plurivox IA installieren und verwenden, Schritt für Schritt"],es:["Ir a la guía","Cómo instalar y usar Plurivox IA, paso a paso"],pt:["Ir para o guia","Como instalar e usar o Plurivox IA, passo a passo"]};
 const AIS=["Claude","ChatGPT","Mistral"];
 function clear(){tm.forEach(clearTimeout);tm=[];run++;$("chat").innerHTML="";$("rep").hidden=true;$("pr").hidden=true;$("go").disabled=false;$("rs").hidden=true}
 function setLang(l){cur=l;clear();const d=D[l],u=d.ui;document.documentElement.lang=l;document.title=u.title;
 try{localStorage.setItem("pvdemo",l)}catch(e){}
 $("sw").innerHTML=L.map(k=>`<button type="button" data-l="${k}" aria-pressed="${k===l}">${D[k].name}</button>`).join("");
 $("sw").querySelectorAll("button").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
-$("t").textContent=u.title;$("s").textContent=u.sub;$("banner").innerHTML=u.banner;$("hq").textContent=u.ex+" · "+u.q;$("q").textContent=d.q;
+$("gt").textContent=GL[l][0];$("gs").textContent=GL[l][1];$("t").textContent=u.title;$("s").textContent=u.sub;$("banner").innerHTML=u.banner;$("hq").textContent=u.ex+" · "+u.q;$("q").textContent=d.q;
 $("hw").textContent=u.who;$("hm").textContent=u.mod;$("mod").textContent="Claude";$("ht").textContent=u.turns;$("hf").textContent=u.files;$("nf").textContent=u.nofiles;
 $("chips").innerHTML=AIS.map((a,i)=>`<span class="chip"><span class="dot" style="background:${COL[i]}"></span>${a}${i===2?` <span class="mute">(${u.added})</span>`:""}</span>`).join("");
 $("go").textContent=u.start;$("all").textContent=u.all;$("rs").textContent=u.replay;$("warn").textContent=u.warn;$("foot").textContent=u.foot}
